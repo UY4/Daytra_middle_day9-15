@@ -1,0 +1,539 @@
+// $color-active:#E81919;
+
+// a{
+//     text-decoration: none;
+//     color:#FFFFFF;
+// }
+
+// .container{
+//     margin: auto;
+//     width:1280px;
+
+// }
+
+// .clear::after {
+//     content:"";
+//     clear: both;
+//     display:block;
+// }
+
+// a:hover{
+//     opacity: 0.7;
+// }
+
+// /* ==================
+// header
+// =================== */
+// header{
+//     height:100px;
+//     background-color:#3F51B5 ;
+//     //スクロールしても固定位置が同じ
+//     position: fixed;   
+// }
+
+// .header-inner{
+//     width:1200px;
+//     max-width: 100%;
+//     //左右の空白を自動化するため、中央ぞろえになる。（詰めあい） 
+//     margin-left: auto;
+//     margin-right: auto;
+// } 
+
+// .header-left{
+//     float:left;
+//     height:100px;
+// }
+
+// .header-left img{
+//     margin-top: 30px;   
+//     margin-bottom: 30px;   
+// }
+
+// .header-right{
+//     float:right;
+// }
+
+// .header-nav{
+//     list-style: none;
+//     display:flex;
+//     margin: 0px;
+//     line-height:100px ;
+// }
+
+// .header-nav-item{
+//     width:100px;
+//     height:100px;
+//     font-size:16px;
+//     font-style: medium;
+//     font-family:"游ゴシック" ;
+// }
+
+// .header-nav li a{
+//     position: relative;
+// }
+
+// .header-nav li a.is-active::after{
+//     content:"";
+//     position: absolute;
+//     left:0;
+//     bottom: -5px;
+//     width: 100%;
+//     height: 2px;
+//     background: $color-active;
+// }
+
+// /* ==================
+// mainvisual
+// =================== */
+// .mainvisual{
+//     background-image: url("../img/scott-graham-OQMZwNd3ThU-unsplash.jpg");
+//     background-size: cover;
+//     width: 1280px;
+//     height: 600px;
+// }
+
+// .mainvisual h1{
+//     font-size: 64px;
+//     text-align: center;
+//     font-family:"游ゴシック" ;
+//     font-weight: bold;
+// }
+
+// .mainvisualp{
+//     font-size: 24px;
+//     text-align: center;
+//     font-family:"游ゴシック" ;
+//     font-weight: bold;
+// }
+
+// .mainvisual button{
+//     padding: 72px 324px;
+//     display:inline-block;
+//     background-color: #3F51B5;
+//     color: #fff;
+//     font-size: 24px;
+//     font-weight:bold;
+//     border-radius: 4px;
+//     border: none;
+// }
+
+// -----
+// 設定
+// -----
+
+// 色
+$color-main: #3f51b5; // ベース色
+$color-active: #e81919; // アクティブ色
+$color-background-base: #fff; // 背景色
+$color-text-base: #333; // テキスト色
+$hover-opacity: 0.6; // 透過度
+
+// レイアウト幅
+$layout-width-canvas: 1280px;
+$layout-width-inner: 1200px;
+
+// 階層
+$layer: (
+	modal: 100, // モダール
+	drawer: 40, // ドロワー
+	floating: 30, // フローティングアイテム
+	header: 20, // ヘッダー
+	footer: 10, // フッター
+	default: 1,
+);
+
+// 余白
+$padding-pc: 24px;
+$padding-tab: 24px;
+$padding-sp: 16px;
+
+// ヘッダー高さ
+$header-height-pc: 100px;
+$header-height-sp: 60px;
+
+// フォント
+$font-family-default: "游ゴシック体", "Yu Gothic", yugothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", meiryo, "MS Pゴシック", "MS PGothic", sans-serif; // 標準フォント
+$font-family-english: sans-serif;
+$font-family-base: $font-family-default;
+$font-size-base: 16px;
+$font-weight-base: 400;
+$line-height-base: 1.6;
+
+// ブレークポイント
+$breakpoints: (
+	"sp": "(max-width: 767px)",
+	"tab-only": "(min-width: 768px) and (max-width: #{$layout-width-inner + $padding-pc * 2 - 1px})",
+	"tab": "(max-width: #{$layout-width-inner + $padding-pc * 2 - 1px})",
+	"pc": "(min-width: #{$layout-width-inner})",
+);
+
+// メディアクエリー
+//mixinは引数を付けるメソッド、mqというメソッド、引数名をbreakpoint、初期値として引数に変数spの値を代入する
+@mixin mq($breakpoint: sp) {
+	//map-get(マップ型変数、キー)（マップ変数の取得宣言）で値を取得する（breakpointsの中のbreakpointの値が対象になる）
+	@media #{map-get($breakpoints, $breakpoint)} {
+		//指定された中身をカスタムする
+		@content;
+	}
+}
+
+// -----
+// 初期化
+// -----
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: $font-family-base;
+	font-size: $font-size-base;
+	font-weight: $font-weight-base;
+	color: $color-text-base;
+	line-height: $line-height-base;
+	-webkit-font-smoothing: antialiased; //macに適応されるフォント修正
+	-moz-osx-font-smoothing: grayscale;  //macに適応されるフォント修正
+	background: $color-background-base;
+	overflow-x: hidden;
+	overflow-wrap: break-word;
+	padding-top: $header-height-pc;
+
+	@include mq('sp') {
+		padding-top: $header-height-sp;
+	}
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	border: none;
+}
+
+// -----
+// 補完クラス
+// -----
+
+// PCだけ非表示
+.hidden-pc {
+	@include mq('pc') {
+		display: none;
+	}
+}
+
+// タブレットだけ非表示
+.hidden-tab {
+	@include mq('tab-only') {
+		display: none;
+	}
+}
+
+// スマホだけ非表示
+.hidden-sp {
+	@include mq('sp') {
+		display: none;
+	}
+}
+
+// セクション
+.section {
+	padding-top: 100px;
+	padding-bottom: 120px;
+
+	@include mq('sp') {
+		padding-top: 40px;
+		padding-bottom: 80px;
+	}
+}
+
+// インナー
+.inner {
+	width: $layout-width-inner;
+	max-width: 100%;
+	margin: 0 auto;
+	height: inherit;
+
+	@include mq('tab') {
+		padding-left: $padding-tab;
+		padding-right: $padding-tab;
+	}
+
+	@include mq('sp') {
+		padding-left: $padding-sp;
+		padding-right: $padding-sp;
+	}
+}
+
+// 右矢印ボタン
+.button-arrow-right {
+	-webkit-appearance: none;
+	//background: $color-main url(../img/icon-arrow-right.png) no-repeat center right 12px / 17px 16px;
+	box-shadow: 0 3px 6px rgba(#000, 0.16);
+	text-align: center;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	text-decoration: none;
+	padding: 14px 60px;
+	font-size: 16px;
+	border-radius: 8px;
+	font-weight: 700;
+	transition: all 0.3s ease 0s;
+	width: 304px;
+	max-width: 100%;
+	line-height: 1.6;
+
+	@include mq('sp') {
+		padding: 14px 32px;
+		width: 100%;
+	}
+}
+
+// セクションタイトル
+.section-title {
+	font-size: 48px;
+	font-weight: 700;
+	padding: 0 0 28px;
+	margin: 0;
+	position: relative;
+	text-align: center;
+	line-height: 1;
+
+	&::after {
+		content: "";
+		background: $color-main;
+		width: 60px;
+		height: 4px;
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+
+		@include mq('sp') {
+			width: 48px;
+		}
+	}
+
+	@include mq('tab') {
+		font-size: 50px;
+		padding-bottom: 28px;
+	}
+
+	@include mq('sp') {
+		font-size: 42px;
+		padding-bottom: 16px;
+	}
+}
+
+// -----
+// ヘッダー
+// -----
+.header {
+	background: $color-main;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: map-get($layer, 'header');
+	height: $header-height-pc;
+
+	@include mq('sp') {
+		height: $header-height-sp;
+	}
+}
+
+.header__inner {
+	display: flex;
+	align-items: center;
+	padding-top: 30px;
+	padding-bottom: 30px;
+
+	@include mq('sp') {
+		padding-top: 14px;
+		padding-bottom: 14px;
+	}
+}
+
+.header__logo {
+	margin: 0;
+	line-height: 1;
+
+	img {
+		width: 205px;
+		vertical-align: top;
+
+		@include mq('tab') {
+			width: 180px;
+		}
+
+		@include mq('sp') {
+			width: 148px;
+		}
+	}
+
+	a {
+		text-decoration: none;
+		transition: all 0.3s ease 0s;
+	}
+}
+
+.header__nav {
+	margin-left: auto;
+
+	@include mq('sp') {
+		display: none;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		align-items: center;
+
+		li {
+			margin-right: 40px;
+
+			&:last-child { //listの中の一番最後の要素を指定
+				margin-right: 0;
+			}
+
+			a {
+				transition: all 0.3s ease 0s;
+				text-decoration: none;
+				color: #fff;
+				display: block;
+				position: relative;
+
+				&::after {
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom: -5px;
+					width: 100%;
+					height: 2px;
+					background: $color-active;
+					opacity: 0;
+					transition: all 0.3s ease 0s;
+				}
+
+				&.is-active {
+					&::after {
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
+}
+
+// -----
+// メインビジュアル
+// -----
+.mainvisual {
+	height: 600px;
+	width: 100%;
+				//透明、urlの中の画像、単一、上から中央ぞろえ、縦横比維持
+	background: transparent url(../img/mainvisual.jpg) no-repeat top center / cover;
+	position: relative;
+	overflow: hidden;
+
+	@include mq('tab') {
+		height: 600px;
+	}
+
+	@include mq('sp') {
+		height: 500px;
+	}
+}
+
+.mainvisual__content {
+	position: absolute;
+	//中央に寄せる
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	text-align: center;
+	line-height: 1.2;
+
+	@include mq('tab') {
+		padding-left: $padding-tab;
+		padding-right: $padding-tab;
+	}
+
+	@include mq('sp') {
+		padding-left: $padding-sp;
+		padding-right: $padding-sp;
+	}
+}
+
+.mainvisual__title {
+	font-size: 64px;
+	font-weight: 700;
+
+	@include mq('tab') {
+		font-size: 56px;
+	}
+
+	@include mq('sp') {
+		font-size: 36px;
+	}
+}
+
+.mainvisual__lead {
+	font-size: 24px;
+	font-weight: 700;
+	margin-top: 24px;
+
+	@include mq('tab') {
+		font-size: 30px;
+	}
+
+	@include mq('sp') {
+		font-size: 20px;
+	}
+}
+
+.mainvisual__button {
+	margin-top: 36px;
+
+	@include mq('tab') {
+		margin-top: 34px;
+	}
+
+	@include mq('sp') {
+		margin-top: 34px;
+	}
+}
+
+// ボタン（メインビジュアル）
+.button-mainvisual {
+	display: inline-block;
+	background: $color-main;
+	color: #fff;
+	text-align: center;
+	font-weight: 700;
+	text-decoration: none;
+	box-shadow: 0 3px 6px rgba(#000, 0.16);
+	cursor: pointer;
+	transition: all 0.3s ease 0s;
+	padding: 22px 24px;
+	border-radius: 8px;
+	font-size: 24px;
+	width: 384px;
+	max-width: 100%;
+
+	@include mq('sp') {
+		padding: 20px 36px;
+		font-size: 20px;
+		width: 280px;
+	}
+}
